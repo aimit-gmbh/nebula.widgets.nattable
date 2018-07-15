@@ -26,8 +26,8 @@ import org.eclipse.nebula.widgets.nattable.selection.SelectionLayer.MoveDirectio
 import org.eclipse.nebula.widgets.nattable.util.GUIHelper;
 import org.eclipse.nebula.widgets.nattable.widget.EditModeEnum;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.events.TraverseEvent;
+import org.eclipse.swt.events.TraverseListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridLayout;
@@ -219,7 +219,7 @@ public class CellEditDialog extends Dialog implements ICellEditDialog {
         Control editorControl = this.cellEditor.getEditorControl();
 
         // propagate the ESC event from the editor to the dialog
-        editorControl.addKeyListener(getEscKeyListener());
+        editorControl.addTraverseListener(getEscKeyListener());
 
         // if the editor control already has no layout data set already, apply
         // the default one
@@ -258,21 +258,15 @@ public class CellEditDialog extends Dialog implements ICellEditDialog {
     }
 
     /**
-     * @return KeyListener that intercepts the ESC key to cancel editing, close
+     * @return TraverseListener that intercepts the ESC key to cancel editing, close
      *         the editor and close the dialog.
      */
-    protected KeyListener getEscKeyListener() {
-        return new KeyListener() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                if (e.keyCode == SWT.ESC) {
-                    cancelPressed();
-                }
-            }
+    protected TraverseListener getEscKeyListener() {
+        return new TraverseListener() {
 
             @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.keyCode == SWT.ESC) {
+            public void keyTraversed(TraverseEvent e) {
+                if (e.doit && e.detail == SWT.TRAVERSE_ESCAPE) {
                     cancelPressed();
                 }
             }

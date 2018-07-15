@@ -164,7 +164,7 @@ public class TickUpdateCellEditDialog extends CellEditDialog {
         Control editorControl = this.cellEditor.getEditorControl();
 
         // propagate the ESC event from the editor to the dialog
-        editorControl.addKeyListener(getEscKeyListener());
+        editorControl.addTraverseListener(getEscKeyListener());
 
         GridDataFactory.fillDefaults().grab(true, false).hint(100, 20)
                 .indent(5, 0).applyTo(editorControl);

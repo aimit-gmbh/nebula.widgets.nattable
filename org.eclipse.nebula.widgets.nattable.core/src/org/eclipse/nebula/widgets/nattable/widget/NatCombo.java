@@ -605,6 +605,7 @@ public class NatCombo extends Composite {
      */
     protected void createDropdownControl(int style) {
         this.dropdownShell = new Shell(getShell(), SWT.MODELESS);
+        this.dropdownShell.setData(NatCombo.this);
 
         // (SWT.V_SCROLL | SWT.NO_SCROLL) prevents appearance of unnecessary
         // horizontal scrollbar on mac

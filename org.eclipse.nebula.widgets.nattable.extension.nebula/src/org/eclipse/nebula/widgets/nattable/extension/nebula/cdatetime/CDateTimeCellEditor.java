@@ -152,7 +152,11 @@ public class CDateTimeCellEditor extends AbstractCellEditor {
 
     @Override
     public CDateTime createEditorControl(final Composite parent) {
-        final CDateTime dateControl = new CDateTime(parent, this.style) {
+        int style = this.style;
+        if (CDateTimeCellEditor.this.editMode == EditModeEnum.DIALOG) {
+            style |= CDT.BORDER;
+        }
+        final CDateTime dateControl = new CDateTime(parent, style) {
             @Override
             protected Shell getContentShell() {
                 Shell shell = super.getContentShell();

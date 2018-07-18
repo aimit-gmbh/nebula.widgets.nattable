@@ -186,6 +186,9 @@ public class CDateTimeCellEditor extends AbstractCellEditor {
 
                     @Override
                     public void keyTraversed(TraverseEvent event) {
+                        if (CDateTimeCellEditor.this.editMode == EditModeEnum.DIALOG) {
+                            return;
+                        }
                         boolean committed = false;
                         if (event.keyCode == SWT.TAB && event.stateMask == SWT.MOD2) {
                             committed = commit(MoveDirectionEnum.LEFT);
@@ -214,7 +217,7 @@ public class CDateTimeCellEditor extends AbstractCellEditor {
         dateControl.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetDefaultSelected(SelectionEvent event) {
-                boolean commit = (event.stateMask == SWT.MOD3) ? false : true;
+                boolean commit = event.stateMask != SWT.MOD3 && CDateTimeCellEditor.this.editMode == EditModeEnum.INLINE;
                 MoveDirectionEnum move = MoveDirectionEnum.NONE;
                 if (CDateTimeCellEditor.this.moveSelectionOnEnter
                         && CDateTimeCellEditor.this.editMode == EditModeEnum.INLINE) {

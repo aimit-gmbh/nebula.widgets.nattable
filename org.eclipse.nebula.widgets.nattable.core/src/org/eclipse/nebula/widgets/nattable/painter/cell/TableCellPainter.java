@@ -251,6 +251,9 @@ public class TableCellPainter extends BackgroundPainter {
      */
     protected Object[] getDataAsArray(ILayerCell cell) {
         Object cellData = cell.getDataValue();
+        if (cellData == null) {
+            return null;
+        }
         Object[] cellDataArray = null;
         if (cellData.getClass().isArray()) {
             cellDataArray = (Object[]) cellData;

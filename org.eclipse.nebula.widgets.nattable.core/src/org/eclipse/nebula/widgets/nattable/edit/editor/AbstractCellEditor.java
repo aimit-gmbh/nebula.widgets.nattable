@@ -500,7 +500,9 @@ public abstract class AbstractCellEditor implements ICellEditor {
         public void focusLost(FocusEvent e) {
             if (this.handleFocusChanges) {
                 if (!e.widget.isDisposed() && !commit(MoveDirectionEnum.NONE, true)) {
-                    if (e.widget instanceof Control) {
+                    // check a second time if widget has been disposed (during
+                    // commit)
+                    if (e.widget instanceof Control && !e.widget.isDisposed()) {
                         ((Control) e.widget).forceFocus();
                     }
                 } else {
